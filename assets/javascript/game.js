@@ -1,15 +1,32 @@
 // GLOBAL VARIABLES
 
-var nashvilleWords = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
+var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
+
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
-var randomWord = nashvilleWords[Math.floor(Math.random() * nashvilleWords.length)].toLowerCase();
-console.log(randomWord);
+// randomwWord = Broadway
+var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+
+// randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
+var randomWordLetters = [];
+
 // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
+// wordLength = 8
 var wordLength = randomWord.replace(/\s/g, "").length;
+
+// nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
 var nashvilleWord = document.getElementById("nashville-word");
+
+// guesses = 15
 var guesses = guesses(wordLength, 7);
+
+// guessedLetters = ["a", "b", "c"]
 var guessedLetters = [];
-var userguess;
+
+// userGuess = "a"
+var userGuess;
+
+// blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
+var blankSpaces = [];
 
 
 
@@ -18,6 +35,35 @@ var userguess;
 function guesses(x, y) {
     return x + y;
 }
+
+function replaceWithLetter() {
+    blankSpaces.splice(blankSpaces.charAt(), 1, randomWordLetters());
+}
+
+function incorrectGuess() {
+    guessedLetters.push(userGuess);
+    document.getElementById("letters-guessed").innerHTML = guessedLetters.join(" ");
+    guesses--;
+}
+
+function correctGuess() {
+    guesses--;
+}
+
+// Finds all instances of user input.
+// Source: https://stackoverflow.com/questions/20798477/how-to-find-index-of-all-occurrences-of-element-in-array
+function getAllIndexes(arr, val) {
+    var indexes = [], j;
+    for(j = 0; j < arr.length; j++)
+        if (arr[j] === val)
+            indexes.push(j);
+    return indexes;
+}
+
+
+
+
+
 
 document.onkeyup = function(event) {
     userGuess = event.key.toLowerCase();
@@ -31,22 +77,20 @@ document.onkeyup = function(event) {
         console.log("This is NOT a valid guess.");
     } else if (searchedLetter) {
         console.log("They match");
-        guesses--;
-        console.log(guesses);
-        guessedLetters.push(userGuess);
-        document.getElementById("letters-guessed").innerHTML = guessedLetters;
-        console.log(guessedLetters);
+        getAllIndexes(randomWordLetters, userGuess);
     } else {
         console.log("They don't match");
-        guesses--;
-        console.log(guesses);
-        guessedLetters.push(userGuess);
-        document.getElementById("letters-guessed").innerHTML = guessedLetters;
-        console.log(guessedLetters);
+        incorrectGuess();
     };
 
     if (guesses === 0) {
         alert("Sorry. You are out of guesses");
+    };
+
+    if (userGuess === randomWordLetters) {
+        replaceWithLetter();
+    } else {
+        
     };
 };
 
@@ -55,9 +99,15 @@ document.onkeyup = function(event) {
 // LOGIC
 
 for (i = 0; i < wordLength; i++) {
-    document.getElementById("nashville-word").innerHTML = " _ ".repeat(wordLength);
+    blankSpaces.push(" _ ");
+    document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
 };
 
-// for (j = 0; j === randomWord.length; j++) {
-//     document.getElementById("letters-guessed").innerHTML = guessedLetters[j] + " ";
-// };
+for (var l = 0; l < randomWord.length; l++) {
+    randomWordLetters.push(randomWord.charAt(l));
+    // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
+    // Removes the space characters from the array;
+    randomWordLetters = randomWordLetters.filter(function(str) {
+        return /\S/.test(str);
+    });
+}
