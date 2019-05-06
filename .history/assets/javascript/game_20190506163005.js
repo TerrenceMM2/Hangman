@@ -28,7 +28,7 @@ var userGuess;
 // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
 var blankSpaces = [];
 
-var indexes = [];
+
 
 
 // FUNCTIONS
@@ -44,18 +44,7 @@ function incorrectGuess() {
 }
 
 function correctGuess() {
-    blankSpaces.splice(indexes, 0, userGuess);
     guesses--;
-}
-
-// Finds all instances of user input.
-// Source: https://stackoverflow.com/questions/20798477/how-to-find-index-of-all-occurrences-of-element-in-array
-function getAllIndexes(arr, val) {
-    indexes = [], j;
-    for(j = 0; j < arr.length; j++)
-        if (arr[j] === val)
-            indexes.push(j);
-    return indexes;
 }
 
 
