@@ -10,7 +10,7 @@ var randomWordLetters = [];
 
 // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
 // wordLength = 8
-var wordLength = randomWord.length;
+var wordLength = randomWord.replace(/\s/g, "").length;
 
 // nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
 var nashvilleWord = document.getElementById("nashville-word");

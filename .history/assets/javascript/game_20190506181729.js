@@ -3,6 +3,7 @@
 var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
 
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
+// randomwWord = Broadway
 var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
 
 // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
@@ -10,7 +11,7 @@ var randomWordLetters = [];
 
 // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
 // wordLength = 8
-var wordLength = randomWord.length;
+var wordLength = randomWord.replace(/\s/g, "").length;
 
 // nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
 var nashvilleWord = document.getElementById("nashville-word");
@@ -44,14 +45,9 @@ function incorrectGuess() {
 
 function correctGuess(indexes) {
     console.log(indexes);
-    indexes.forEach(function(item) {
-        console.log("index", item);
-        console.log("blank spaces", blankSpaces);
-        blankSpaces.splice(item, 1, userGuess);
-        console.log("blank spaces", blankSpaces);
-    });
+    blankSpaces.splice(indexes, 0, userGuess);
     guesses--;
-};
+}
 
 // Finds all instances of user input.
 // Source: https://stackoverflow.com/questions/20798477/how-to-find-index-of-all-occurrences-of-element-in-array

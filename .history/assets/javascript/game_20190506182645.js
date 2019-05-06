@@ -1,6 +1,6 @@
 // GLOBAL VARIABLES
 
-var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
+// var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
 
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
 var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
@@ -10,7 +10,7 @@ var randomWordLetters = [];
 
 // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
 // wordLength = 8
-var wordLength = randomWord.length;
+var wordLength = randomWord.replace(/\s/g, "").length;
 
 // nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
 var nashvilleWord = document.getElementById("nashville-word");
@@ -47,7 +47,7 @@ function correctGuess(indexes) {
     indexes.forEach(function(item) {
         console.log("index", item);
         console.log("blank spaces", blankSpaces);
-        blankSpaces.splice(item, 1, userGuess);
+        blankSpaces.splice(item, 0, userGuess);
         console.log("blank spaces", blankSpaces);
     });
     guesses--;
