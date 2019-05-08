@@ -4,6 +4,7 @@ var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Part
 
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
 var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+console.log("random word", randomWord);
 
 // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
 var randomWordLetters = [];
@@ -49,6 +50,7 @@ function correctGuess(indexes) {
         console.log("blank spaces", blankSpaces);
         blankSpaces.splice(item, 1, userGuess);
         console.log("blank spaces", blankSpaces);
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     });
     guesses--;
 };
@@ -61,16 +63,10 @@ function getAllIndexes(arr, val) {
         if (arr[j] === val)
             indexes.push(j);
     correctGuess(indexes);
-}
-
-
-
-
-
+};
 
 document.onkeyup = function(event) {
     userGuess = event.key.toLowerCase();
-    // console.log(userGuess);
 
     searchedLetter = randomWord.includes(userGuess);
 
@@ -105,14 +101,13 @@ document.onkeyup = function(event) {
 // Adds " _ " to an array.
 for (i = 0; i < wordLength; i++) {
     blankSpaces.push(" _ ");
+    if (randomWord[i] === " ") {
+        blankSpaces.splice(i, 1, "&nbsp;");
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    } else {
     document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
 };
-
-
-// Adds " _ " using .repeat
-// for (i = 0; i < wordLength; i++) {
-//     document.getElementById("nashville-word").innerHTML = blankSpaces.repeat(i);
-// };
+};
 
 for (var l = 0; l < randomWord.length; l++) {
     randomWordLetters.push(randomWord.charAt(l));
@@ -123,8 +118,9 @@ for (var l = 0; l < randomWord.length; l++) {
     });
 }
 
+console.log("random word letters", randomWordLetters);
+
 
 
 // if guess is correct find indexof of character is the word.Adds
     // loop to find each letter.
-
