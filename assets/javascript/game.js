@@ -28,7 +28,7 @@ var userGuess;
 
 // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
 var blankSpaces = [];
-var blankSpacesMinusSpace = blankSpaces;
+var blankSpacesMinusSpace = remove(blankSpaces, "&nbsp;");
 
 var indexes = [];
 
@@ -55,7 +55,7 @@ function correctGuess(indexes) {
         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     });
     guesses--;
-    console.log("correct function   ", guesses)
+    console.log("correct function   ", guesses);
 };
 
 // Finds all instances of user input.
@@ -133,11 +133,16 @@ for (var l = 0; l < randomWord.length; l++) {
     });
 };
 
-for (var m = 0; m < blankSpacesMinusSpace.length; m++){ 
-    if (blankSpacesMinusSpace[m] === "&nbsp;") {
-      blankSpacesMinusSpace.splice(m, 1); 
-    }
- };
+function remove(array, element) {
+    return array.filter(el => el !== element);
+};
+
+
+// for (var m = 0; m < blankSpacesMinusSpace.length; m++){ 
+//     if (blankSpacesMinusSpace[m] === "&nbsp;") {
+//       blankSpacesMinusSpace.splice(m, 1); 
+//     }
+//  };
 
 // if guess is correct find indexof of character is the word.Adds
 // loop to find each letter.
