@@ -1,4 +1,5 @@
 // GLOBAL VARIABLES
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood"];
 
@@ -27,11 +28,15 @@ var userGuess;
 
 // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
 var blankSpaces = [];
+var blankSpacesMinusSpace = blankSpaces;
 
 var indexes = [];
 
 
+
+
 // FUNCTIONS
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 function guesses(x, y) {
     return x + y;
@@ -41,18 +46,16 @@ function incorrectGuess() {
     guessedLetters.push(userGuess);
     document.getElementById("letters-guessed").innerHTML = guessedLetters.join(" ");
     guesses--;
+    console.log("incorrect function   ", guesses)
 }
 
 function correctGuess(indexes) {
-    console.log(indexes);
-    indexes.forEach(function(item) {
-        console.log("index", item);
-        console.log("blank spaces", blankSpaces);
+    indexes.forEach(function (item) {
         blankSpaces.splice(item, 1, userGuess);
-        console.log("blank spaces", blankSpaces);
         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     });
     guesses--;
+    console.log("correct function   ", guesses)
 };
 
 // Finds all instances of user input.
@@ -65,7 +68,20 @@ function getAllIndexes(arr, val) {
     correctGuess(indexes);
 };
 
-document.onkeyup = function(event) {
+function arraysEqual(arr1, arr2) {
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+    return true;
+}
+
+
+
+
+document.onkeyup = function (event) {
     userGuess = event.key.toLowerCase();
 
     searchedLetter = randomWord.includes(userGuess);
@@ -74,29 +90,28 @@ document.onkeyup = function(event) {
     // Source: https://stackoverflow.com/questions/2257070/detect-numbers-or-letters-with-jquery-javascript
     if (!/^[a-z]$/.test(userGuess)) {
         console.log("This is NOT a valid guess.");
+    } else if (blankSpaces.includes(userGuess) || guessedLetters.includes(userGuess)) {
+        console.log("You've guesses this letter already.", guesses);
     } else if (searchedLetter) {
-        console.log("They match");
         getAllIndexes(randomWord, userGuess);
-        // for ( - to loop through each letter )
     } else {
         console.log("They don't match");
         incorrectGuess();
     };
 
-    if (guesses === 0) {
+    if (arraysEqual(blankSpaces, randomWordLetters)) {
+        alert("You Win!")
+    } else if (arraysEqual(blankSpaces, randomWordLetters)) {
+        alert("You win! With Spaces!")
+    } else if (guesses === 0) {
         alert("Sorry. You are out of guesses");
-    };
-
-    if (userGuess === randomWordLetters) {
-        replaceWithLetter();
-    } else {
-        
     };
 };
 
 
 
 // LOGIC
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Adds " _ " to an array.
 for (i = 0; i < wordLength; i++) {
@@ -105,22 +120,24 @@ for (i = 0; i < wordLength; i++) {
         blankSpaces.splice(i, 1, "&nbsp;");
         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     } else {
-    document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-};
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    };
 };
 
 for (var l = 0; l < randomWord.length; l++) {
     randomWordLetters.push(randomWord.charAt(l));
     // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
     // Removes the space characters from the array;
-    randomWordLetters = randomWordLetters.filter(function(str) {
+    randomWordLetters = randomWordLetters.filter(function (str) {
         return /\S/.test(str);
     });
-}
+};
 
-console.log("random word letters", randomWordLetters);
-
-
+for (var m = 0; m < blankSpacesMinusSpace.length; m++){ 
+    if (blankSpacesMinusSpace[m] === "&nbsp;") {
+      blankSpacesMinusSpace.splice(m, 1); 
+    }
+ };
 
 // if guess is correct find indexof of character is the word.Adds
-    // loop to find each letter.
+// loop to find each letter.
