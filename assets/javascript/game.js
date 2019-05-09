@@ -5,7 +5,6 @@ var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman", "Part
 
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
 var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-console.log("random word", randomWord);
 
 // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
 var randomWordLetters = [];
@@ -68,11 +67,21 @@ for (var x = 0; x < randomWord.length; x++) {
 
 var indexes = [];
 
+var winTotal = 0;
+var lossTotal = 0;
+var gussesRemaining = guesses;
+var alertMessages = ['Please choose a letter.', 'You have already choosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses', "  "]
+
+var id;
 
 
 
 // FUNCTIONS
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+// function startGame {
+
+// }
 
 function guesses(x, y) {
     return x + y;
@@ -81,20 +90,16 @@ function guesses(x, y) {
 function incorrectGuess() {
     guessedLetters.push(userGuess);
     document.getElementById("letters-guessed").innerHTML = guessedLetters.join(" ");
-    guesses--;
-    console.log("incorrect function   ", guesses)
+    return guesses--;
 };
 
 function correctGuess(indexes) {
     indexes.forEach(function (item) {
         blankSpacesMinusSpace.splice(item, 1, userGuess);
-        console.log(blankSpacesMinusSpace);
         blankSpaces.splice(item, 1, userGuess);
-        console.log(blankSpaces);
         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     });
-    guesses--;
-    console.log("correct function   ", guesses);
+    return guesses--;
 };
 
 // Finds all instances of user input.
@@ -108,16 +113,34 @@ function getAllIndexes(arr, val) {
 };
 
 function arraysEqual(arr1, arr2) {
-    if(arr1.length !== arr2.length)
+    if (arr1.length !== arr2.length)
         return false;
-    for(var i = arr1.length; i--;) {
-        if(arr1[i] !== arr2[i])
+    for (var i = arr1.length; i--;) {
+        if (arr1[i] !== arr2[i])
             return false;
-    }
+    };
     return true;
 };
 
+function alertMessage(num) {
+    if (num === 0) {
+        document.getElementById("alert-message").innerHTML = alertMessages[0];
+    } else if (num === 1) {
+        document.getElementById("alert-message").innerHTML = alertMessages[1];
+    } else if (num === 2) {
+        document.getElementById("alert-message").innerHTML = alertMessages[2];
+    } else if (num === 3) {
+        document.getElementById("alert-message").innerHTML = alertMessages[3];
+    } else if (num === 4) {
+        document.getElementById("alert-message").innerHTML = alertMessages[4];
+    } else {
+        resetMessage();
+    }
+};
 
+function resetMessage() {
+    document.getElementById("alert-message").innerHTML = "";
+};
 
 document.onkeyup = function (event) {
     userGuess = event.key.toLowerCase();
@@ -127,52 +150,42 @@ document.onkeyup = function (event) {
     // Using Regular Expressions to check if the user input was valid (i.e. a letter key only, a-z).
     // Source: https://stackoverflow.com/questions/2257070/detect-numbers-or-letters-with-jquery-javascript
     if (!/^[a-z]$/.test(userGuess)) {
-        console.log("This is NOT a valid guess.");
-    } else if (blankSpaces.includes(userGuess) || guessedLetters.includes(userGuess)) {
-        console.log("You've guesses this letter already.", guesses);
+        alertMessage(0);
+    } else if 
+        (blankSpaces.includes(userGuess) || guessedLetters.includes(userGuess)) {
+            alertMessage(1);
     } else if (searchedLetter) {
         getAllIndexes(randomWord, userGuess);
+        document.getElementById("guesses-remaining").innerHTML = guesses;
+        alertMessage();
     } else {
-        console.log("They don't match");
         incorrectGuess();
+        document.getElementById("guesses-remaining").innerHTML = guesses;
+        alertMessage();
     };
+
 
     if (arraysEqual(blankSpaces, randomWordLetters)) {
-        alert("You Win!")
+        alertMessage(2);
+        winTotal++;
+        document.getElementById("win-total").innerHTML = winTotal;
     } else if (arraysEqual(blankSpacesMinusSpace, randomWordLettersWithSpaces)) {
-        alert("You win!")
+        alertMessage(2);
+        winTotal++;
+        document.getElementById("win-total").innerHTML = winTotal;
     } else if (guesses === 0) {
-        alert("Sorry. You are out of guesses.");
+        alertMessage(3);
+        document.getElementById("loss-total").innerHTML = lossTotal;
+    } else if (guesses < 0) {
+        alertMessage(4);
+        document.getElementById("guesses-remaining").innerHTML = alertMessages[5];
     };
+
 };
 
-
+document.getElementById("win-total").innerHTML = winTotal;
+document.getElementById("loss-total").innerHTML = lossTotal;
+document.getElementById("guesses-remaining").innerHTML = guesses;
 
 // LOGIC
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Adds " _ " to an array.
-
-
-
-
-
-
-// Source: https://mariusschulz.com/blog/removing-elements-from-javascript-arrays
-// Removes element from an array.
-// function remove(array, element) {
-//     return array.filter(el => el !== element);
-// };
-
-
-
-
-
-// for (var m = 0; m < blankSpacesMinusSpace.length; m++){ 
-//     if (blankSpacesMinusSpace[m] === "&nbsp;") {
-//       blankSpacesMinusSpace.splice(m, 1); 
-//     }
-//  };
-
-// if guess is correct find indexof of character is the word.Adds
-// loop to find each letter.
