@@ -2,6 +2,8 @@ function startGame() {
 
     resetMessage();
 
+    musicBed();
+
     // GLOBAL VARIABLES
     ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,6 +80,8 @@ function startGame() {
 
     var id;
 
+
+    // Functions
     function guesses(x, y) {
         return x + y;
     };
@@ -157,16 +161,20 @@ function startGame() {
         // Source: https://stackoverflow.com/questions/2257070/detect-numbers-or-letters-with-jquery-javascript
         if (!/^[a-z]$/.test(userGuess)) {
             alertMessage(0);
+            errorSound();
         } else if (blankSpaces.includes(userGuess) || guessedLetters.includes(userGuess)) {
             alertMessage(1);
+            errorSound();
         } else if (searchedLetter) {
             getAllIndexes(randomWord, userGuess);
             document.getElementById("guesses-remaining").innerHTML = guesses;
             alertMessage();
+            correctGuessSound();
         } else {
             incorrectGuess();
             document.getElementById("guesses-remaining").innerHTML = guesses;
             alertMessage();
+            incorrectGuessSound();
         };
 
 
@@ -177,10 +185,12 @@ function startGame() {
         } else if (arraysEqual(blankSpacesMinusSpace, randomWordLettersWithSpaces)) {
             alertMessage(2);
             winTotal++;
+            winningSound();
             document.getElementById("win-total").innerHTML = winTotal;
         } else if (guesses === 0) {
             alertMessage(3);
             document.getElementById("loss-total").innerHTML = lossTotal;
+            losingSound();
         } else if (guesses < 0) {
             alertMessage(4);
             document.getElementById("guesses-remaining").innerHTML = alertMessages[5];
@@ -188,13 +198,53 @@ function startGame() {
 
     };
 
+    function correctGuessSound() {
+        var audio = document.getElementById("correct-guess-sound");
+        audio.play();
+    };
 
+    function incorrectGuessSound() {
+        var audio = document.getElementById("incorrect-guess-sound");
+        audio.play();
+    };
+
+    function errorSound() {
+        var audio = document.getElementById("error-sound");
+        audio.play();
+    };
+
+    function musicBed() {
+        var audio = document.getElementById("music-bed");
+        audio.loop = true;
+        audio.play();
+    };
+
+    function winningSound() {
+        var audio = document.getElementById("winning-sound");
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+            audio.currentTime = 0
+    };
+};
+
+    function losingSound() {
+        var audio = document.getElementById("losing-sound");
+        audio.play();
+    };
+
+   
     document.getElementById("win-total").innerHTML = winTotal;
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
 
 };
 
+function pauseMusicBed() {
+    var audio = document.getElementById("music-bed");
+    audio.pause();
+};
 
 // LOGIC
 ///////////////////////////////////////////////////////////////////////////////////////////////////
