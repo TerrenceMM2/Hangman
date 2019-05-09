@@ -10,6 +10,15 @@ console.log("random word", randomWord);
 // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
 var randomWordLetters = [];
 
+for (var l = 0; l < randomWord.length; l++) {
+    randomWordLetters.push(randomWord.charAt(l));
+    // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
+    // Removes the space characters from the array;
+    randomWordLetters = randomWordLetters.filter(function (str) {
+        return /\S/.test(str);
+    });
+};
+
 // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
 // wordLength = 8
 var wordLength = randomWord.length;
@@ -28,7 +37,34 @@ var userGuess;
 
 // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
 var blankSpaces = [];
-var blankSpacesMinusSpace = remove(blankSpaces, "&nbsp;");
+
+for (i = 0; i < wordLength; i++) {
+    blankSpaces.push(" _ ");
+    if (randomWord[i] === " ") {
+        blankSpaces.splice(i, 1, "&nbsp;");
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    } else {
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    };
+};
+
+
+// To remove "&nbsp;" from blankSpaces array to be used to compare randomWordLetters array.
+// Source: https://flaviocopes.com/how-to-remove-item-from-array/
+var whiteSpace = "&nbsp;";
+var blankSpacesMinusSpace = blankSpaces.filter(item => !whiteSpace.includes(item));
+
+var randomWordLettersWithSpaces = [];
+
+for (var x = 0; x < randomWord.length; x++) {
+    if (randomWord[x] === " ") {
+        randomWordLettersWithSpaces.splice(i, 1, " _ ");
+    }
+    randomWordLettersWithSpaces.push(randomWord.charAt(x));
+    randomWordLettersWithSpaces = randomWordLettersWithSpaces.filter(function (str) {
+        return /\S/.test(str);
+    });
+};
 
 var indexes = [];
 
@@ -40,18 +76,21 @@ var indexes = [];
 
 function guesses(x, y) {
     return x + y;
-}
+};
 
 function incorrectGuess() {
     guessedLetters.push(userGuess);
     document.getElementById("letters-guessed").innerHTML = guessedLetters.join(" ");
     guesses--;
     console.log("incorrect function   ", guesses)
-}
+};
 
 function correctGuess(indexes) {
     indexes.forEach(function (item) {
+        blankSpacesMinusSpace.splice(item, 1, userGuess);
+        console.log(blankSpacesMinusSpace);
         blankSpaces.splice(item, 1, userGuess);
+        console.log(blankSpaces);
         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
     });
     guesses--;
@@ -76,8 +115,7 @@ function arraysEqual(arr1, arr2) {
             return false;
     }
     return true;
-}
-
+};
 
 
 
@@ -101,10 +139,10 @@ document.onkeyup = function (event) {
 
     if (arraysEqual(blankSpaces, randomWordLetters)) {
         alert("You Win!")
-    } else if (arraysEqual(blankSpaces, randomWordLetters)) {
-        alert("You win! With Spaces!")
+    } else if (arraysEqual(blankSpacesMinusSpace, randomWordLettersWithSpaces)) {
+        alert("You win!")
     } else if (guesses === 0) {
-        alert("Sorry. You are out of guesses");
+        alert("Sorry. You are out of guesses.");
     };
 };
 
@@ -114,28 +152,20 @@ document.onkeyup = function (event) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Adds " _ " to an array.
-for (i = 0; i < wordLength; i++) {
-    blankSpaces.push(" _ ");
-    if (randomWord[i] === " ") {
-        blankSpaces.splice(i, 1, "&nbsp;");
-        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-    } else {
-        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-    };
-};
 
-for (var l = 0; l < randomWord.length; l++) {
-    randomWordLetters.push(randomWord.charAt(l));
-    // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
-    // Removes the space characters from the array;
-    randomWordLetters = randomWordLetters.filter(function (str) {
-        return /\S/.test(str);
-    });
-};
 
-function remove(array, element) {
-    return array.filter(el => el !== element);
-};
+
+
+
+
+// Source: https://mariusschulz.com/blog/removing-elements-from-javascript-arrays
+// Removes element from an array.
+// function remove(array, element) {
+//     return array.filter(el => el !== element);
+// };
+
+
+
 
 
 // for (var m = 0; m < blankSpacesMinusSpace.length; m++){ 
