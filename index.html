@@ -7,48 +7,66 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coursework 3: Word Guess Game</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
+    <div class="container">
+        <div class="row">
+            <h1 class="col-12">Nashville Word Guess</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" type="button" onkeypress="return restrictSpace()"
+                    onclick="startGame()">Start Game!</button>
+                <button class="btn btn-primary" type="button" onclick="togglePlay()">Pause Music</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div id="nashville-word">Press "Start Game!" to begin.</div>
+            </div>
+        </div>
 
-    <h1>Nashville Word Guess</h1>
+        <div class="row">
+            <div class="col-6">
+                <div class="guess-info">
+                    <div class="guesses">
+                        <p>Guessed Letters</p>
+                        <span id="letters-guessed"></span>
+                    </div>
 
-    <button class="btn btn-primary" type="button" onkeypress="return restrictSpace()" onclick="startGame()">Start Game!</button>
-    <br>
-    <span id="nashville-word"></span>
+                    <div class="guess-number">
+                        <p>Number of Guesses Remaining:</p>
+                        <span id="guesses-remaining"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="user-info">
+                    <div class="wins">
+                        <p>Number of wins:</p>
+                        <span id="win-total"></span>
+                    </div>
 
-    <div class="guesses">
-        <p>Guessed Letters</p>
-        <span id="letters-guessed"></span>
+                    <div class="losses">
+                        <p>Numer of Losses:</p>
+                        <span id="loss-total"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="" id="alert-message" role="alert"></div>
     </div>
-
-    <div class="wins">
-        <p>Number of wins:</p>
-        <span id="win-total"></span>
-    </div>
-
-    <div class="losses">
-        <p>Numer of Losses:</p>
-        <span id="loss-total"></span>
-    </div>
-
-    <div class="guess-number">
-        <p>Number of Guesses Remaining:</p>
-        <span id="guesses-remaining"></span>
-    </div>
-
-    <div class="" id="alert-message" role="alert"></div>
-
-    <button class="btn btn-primary" type="button" onclick="togglePlay()">Pause Music</button>
-
     <audio id="music-bed" src="assets/audio/music_bed.mp3" type="audio/mp3"></audio>
     <audio id="correct-guess-sound" src="assets/audio/correct.mp3" type="audio/mp3"></audio>
     <audio id="incorrect-guess-sound" src="assets/audio/incorrect.mp3" type="audio/mp3"></audio>
     <audio id="error-sound" src="assets/audio/error.mp3" type="audio/mp3"></audio>
     <audio id="winning-sound" src="assets/audio/you_win.mp3" type="audio/mp3"></audio>
     <audio id="losing-sound" src="assets/audio/you_lose.mp3" type="audio/mp3"></audio>
-    
+
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous">
     </script>

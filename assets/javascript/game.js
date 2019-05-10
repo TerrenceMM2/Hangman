@@ -257,6 +257,14 @@ function startGame() {
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
 
+    if (guesses === 3) {
+        guesses.fontcolor("yellow");
+    } else if (guesses === 2) {
+        guesses.fontcolor("orange");
+    } else if (guesses === 1) {
+        guesses.fontcolor("red");
+    }
+
 };
 
 function resetGuessedLetters() {
