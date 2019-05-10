@@ -1,19 +1,17 @@
 var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
 
-// Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
-var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-
 // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
 var randomWordLetters = [];
-
-// guessedLetters = ["a", "b", "c"]
-var guessedLetters = [];
 
 var winTotal = 0;
 
 var lossTotal = 0;
 
 function startGame() {
+
+    resetNumberOfGuessesStyling()
+
+    resetGuessedLetters();
 
     resetMessage();
 
@@ -23,7 +21,11 @@ function startGame() {
 
     stopLosingSound();
 
-    resetGuessedLetters();
+    initializeGuessedLetters()
+
+    // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
+    var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+    console.log(randomWord);
 
     for (var l = 0; l < randomWord.length; l++) {
         randomWordLetters.push(randomWord.charAt(l));
@@ -78,7 +80,7 @@ function startGame() {
     var indexes = [];
 
     var gussesRemaining = guesses;
-    var alertMessages = ['Please choose a letter.', 'You have already choosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses']
+    var alertMessages = ['Please choose a letter.', 'You have already chosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses'];
 
     var id;
 
@@ -89,7 +91,7 @@ function startGame() {
     };
     
     var uniqueRandomWordLetters = randomWordLetters.filter(unique);
-    var guesses = uniqueRandomWordLetters.length + 5;
+    var guesses = 5;
 
 
     function incorrectGuess() {
@@ -104,7 +106,6 @@ function startGame() {
             blankSpaces.splice(item, 1, userGuess);
             document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
         });
-        return guesses--;
     };
 
     // Finds all instances of user input.
@@ -190,12 +191,14 @@ function startGame() {
             alertMessage(2);
             winTotal++;
             document.getElementById("win-total").innerHTML = winTotal;
+            winningImage(randomWord);
         } else if (arraysEqual(blankSpacesMinusSpace, randomWordLettersWithSpaces)) {
             alertMessage(2);
             winTotal++;
             winningSound();
             stopMusicBed();
             document.getElementById("win-total").innerHTML = winTotal;
+            winningImage(randomWord);
         } else if (guesses === 0) {
             alertMessage(3);
             lossTotal++;
@@ -206,6 +209,27 @@ function startGame() {
             document.getElementById("guesses-remaining").innerHTML = alertMessages[5];
         };
 
+        if (guesses === 3) {
+            var x = document.getElementById("guesses-remaining");
+            x.style.color = "#ffc107";
+            x.style.fontWeight = "700";
+            x.style.fontSize = "1.8rem";
+        } else if (guesses === 2) {
+            var x = document.getElementById("guesses-remaining");
+            x.style.color = "#e68a00";
+            x.style.fontWeight = "800";
+            x.style.fontSize = "1.9rem";
+        } else if (guesses === 1) {
+            var x = document.getElementById("guesses-remaining");
+            x.style.color = "#cc2900";
+            x.style.fontWeight = "900";
+            x.style.fontSize = "2rem";
+        };
+
+    };
+    
+    function initializeGuessedLetters() {
+        document.getElementById("letters-guessed").innerHTML = "&nbsp;";
     };
 
     function correctGuessSound() {
@@ -256,20 +280,18 @@ function startGame() {
     document.getElementById("win-total").innerHTML = winTotal;
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
-
-    if (guesses === 3) {
-        guesses.fontcolor("yellow");
-    } else if (guesses === 2) {
-        guesses.fontcolor("orange");
-    } else if (guesses === 1) {
-        guesses.fontcolor("red");
-    }
-
 };
 
 function resetGuessedLetters() {
     guessedLetters = [];
     document.getElementById("letters-guessed").innerHTML = guessedLetters;
+};
+
+function resetNumberOfGuessesStyling() {
+    var guessesStyling = document.getElementById("guesses-remaining");
+    guessesStyling.style.color = null;
+    guessesStyling.style.fontWeight = null;
+    guessesStyling.style.fontSize = null;
 };
 
 function pauseMusicBed() {
@@ -288,9 +310,40 @@ function togglePlay() {
     return audio.paused ? audio.play() : audio.pause();
 };
 
+function toggleSoundFX() {
+    var soundFx = document.getElementsByClassName("sound-fx");
+    soundFx.volume = 0;
+};
+
 function restrictSpace() {
     if (event.keyCode == 32 || event.keyCode == 13) {
         event.returnValue = false;
         return false;
+    }
+};
+
+function winningImage(randomWord) {
+    var b = document.getElementById("winning-image");
+    var c = document.getElementById("image-placeholder")
+    if (randomWord === "broadway") {
+        b.setAttribute("src", "assets/images/broadway.jpg");
+        b.style.display = "block";
+        b.appendChild(c);
+    } else if (randomWord === "vanderbilt") {
+        b.setAttribute("src", "assets/images/vanderbilt.jpg");
+        b.style.display = "block";
+        b.appendChild(c);
+    } else if (randomWord === "grand ole opry") {
+        b.setAttribute("src", "assets/images/grand_ole_opry.jpg");
+        b.style.display = "block";
+        b.appendChild(c);
+    } else if (randomWord === "ryman auditorium") {
+        b.setAttribute("src", "assets/images/ryman.jpg");
+        b.style.display = "block";
+        b.appendChild(c);
+    } else if (randomWord === "parthenon") {
+        b.setAttribute("src", "assets/images/parthenon.jpg");
+        b.style.display = "block";
+        b.appendChild(c);
     }
 };
