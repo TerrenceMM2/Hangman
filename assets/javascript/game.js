@@ -1,6 +1,4 @@
-// var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
-
-var nashvilleArray = ["Belle Meade Plantation"]
+var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
 
 // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
 var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
@@ -14,7 +12,6 @@ var guessedLetters = [];
 var winTotal = 0;
 
 var lossTotal = 0;
-
 
 function startGame() {
 
@@ -43,9 +40,6 @@ function startGame() {
 
     // nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
     var nashvilleWord = document.getElementById("nashville-word");
-
-    // guesses = 15
-    var guesses = wordLength;
 
     // userGuess = "a"
     var userGuess;
@@ -87,6 +81,15 @@ function startGame() {
     var alertMessages = ['Please choose a letter.', 'You have already choosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses']
 
     var id;
+
+    // Used to calculate guesses based on unique array values
+    // Source: https://medium.com/front-end-weekly/getting-unique-values-in-javascript-arrays-17063080f836
+    var unique = (value, index, self) => {
+        return self.indexOf(value) === index;
+    };
+    
+    var uniqueRandomWordLetters = randomWordLetters.filter(unique);
+    var guesses = uniqueRandomWordLetters.length + 5;
 
 
     function incorrectGuess() {
@@ -159,6 +162,8 @@ function startGame() {
         userGuess = event.key.toLowerCase();
 
         searchedLetter = randomWord.includes(userGuess);
+
+        restrictSpace();
 
         // Using Regular Expressions to check if the user input was valid (i.e. a letter key only, a-z).
         // Source: https://stackoverflow.com/questions/2257070/detect-numbers-or-letters-with-jquery-javascript
@@ -273,4 +278,11 @@ function stopMusicBed() {
 // Source: https://stackoverflow.com/questions/27368778/how-to-toggle-audio-play-pause-with-one-button-or-link
 function togglePlay() {
     return audio.paused ? audio.play() : audio.pause();
+};
+
+function restrictSpace() {
+    if (event.keyCode == 32 || event.keyCode == 13) {
+        event.returnValue = false;
+        return false;
+    }
 };
