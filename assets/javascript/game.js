@@ -1,19 +1,32 @@
+// var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
+
+var nashvilleArray = ["Belle Meade Plantation"]
+
+// Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
+var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+
+// randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
+var randomWordLetters = [];
+
+// guessedLetters = ["a", "b", "c"]
+var guessedLetters = [];
+
+var winTotal = 0;
+
+var lossTotal = 0;
+
+
 function startGame() {
 
     resetMessage();
 
     musicBed();
 
-    // GLOBAL VARIABLES
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    stopWinningSound();
 
-    var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
+    stopLosingSound();
 
-    // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
-    var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-
-    // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
-    var randomWordLetters = [];
+    resetGuessedLetters();
 
     for (var l = 0; l < randomWord.length; l++) {
         randomWordLetters.push(randomWord.charAt(l));
@@ -32,10 +45,7 @@ function startGame() {
     var nashvilleWord = document.getElementById("nashville-word");
 
     // guesses = 15
-    var guesses = guesses(wordLength, 7);
-
-    // guessedLetters = ["a", "b", "c"]
-    var guessedLetters = [];
+    var guesses = wordLength;
 
     // userGuess = "a"
     var userGuess;
@@ -73,18 +83,11 @@ function startGame() {
 
     var indexes = [];
 
-    var winTotal = 0;
-    var lossTotal = 0;
     var gussesRemaining = guesses;
     var alertMessages = ['Please choose a letter.', 'You have already choosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses']
 
     var id;
 
-
-    // Functions
-    function guesses(x, y) {
-        return x + y;
-    };
 
     function incorrectGuess() {
         guessedLetters.push(userGuess);
@@ -177,7 +180,7 @@ function startGame() {
             incorrectGuessSound();
         };
 
-
+        // Calculates winning or losing scenarios
         if (arraysEqual(blankSpaces, randomWordLetters)) {
             alertMessage(2);
             winTotal++;
@@ -186,11 +189,13 @@ function startGame() {
             alertMessage(2);
             winTotal++;
             winningSound();
+            stopMusicBed();
             document.getElementById("win-total").innerHTML = winTotal;
         } else if (guesses === 0) {
             alertMessage(3);
-            document.getElementById("loss-total").innerHTML = lossTotal;
+            lossTotal++;
             losingSound();
+            stopMusicBed();
         } else if (guesses < 0) {
             alertMessage(4);
             document.getElementById("guesses-remaining").innerHTML = alertMessages[5];
@@ -214,31 +219,44 @@ function startGame() {
     };
 
     function musicBed() {
-        var audio = document.getElementById("music-bed");
+        audio = document.getElementById("music-bed");
         audio.loop = true;
         audio.play();
+        audio.currentTime=0;
     };
 
     function winningSound() {
         var audio = document.getElementById("winning-sound");
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-            audio.currentTime = 0
+        audio.play();
+        audio.currentTime = 0;
     };
-};
 
     function losingSound() {
         var audio = document.getElementById("losing-sound");
         audio.play();
+        audio.currentTime = 0;
     };
 
-   
+    function stopWinningSound() {
+        var audio = document.getElementById("winning-sound");
+        audio.pause();
+    };
+
+    function stopLosingSound() {
+        var audio = document.getElementById("losing-sound");
+        audio.pause();
+    };
+     
+
     document.getElementById("win-total").innerHTML = winTotal;
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
 
+};
+
+function resetGuessedLetters() {
+    guessedLetters = [];
+    document.getElementById("letters-guessed").innerHTML = guessedLetters;
 };
 
 function pauseMusicBed() {
@@ -246,5 +264,13 @@ function pauseMusicBed() {
     audio.pause();
 };
 
-// LOGIC
-///////////////////////////////////////////////////////////////////////////////////////////////////
+function stopMusicBed() {
+    var audio = document.getElementById("music-bed");
+    audio.pause();
+};
+
+// Allows user to stop and start audio.
+// Source: https://stackoverflow.com/questions/27368778/how-to-toggle-audio-play-pause-with-one-button-or-link
+function togglePlay() {
+    return audio.paused ? audio.play() : audio.pause();
+};
