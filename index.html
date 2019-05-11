@@ -10,7 +10,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
@@ -37,45 +37,45 @@
                 <span>Sound FX</span>
             </div>
         </div>
-    <div class="row align-items-end">
-        <div class="col-12">
-            <div id="nashville-word">Press "Start Game!" to begin.</div>
-        </div>
-        <div class="image-location col-12">
-                <div id="image-placeholder"></div>
-            </div>
-    </div>
-
-    <div class="row">
-        <div class="col-6">
-            <div class="guess-info">
-                <div class="guesses">
-                    <p>Guessed Letters</p>
-                    <p id="letters-guessed">&nbsp;</p>
-                </div>
-
-                <div class="guess-number">
-                    <p>Incorrect Guesses Allowed:</p>
-                    <p id="guesses-remaining">&nbsp;</p>
-                </div>
+        <div class="row align-items-end">
+            <div class="col-12">
+                <div id="nashville-word">Press "Start Game!" to begin.</div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="user-info">
-                <div class="wins">
-                    <p>Number of wins:</p>
-                    <p id="win-total">&nbsp;</p>
-                </div>
 
-                <div class="losses">
-                    <p>Numer of Losses:</p>
-                    <p id="loss-total">&nbsp;</p>
+        <div class="row align-items-center guesses-row">
+            <div class="col-4">
+                <div class="guess-info">
+                    <div class="guesses">
+                        <p>Guessed Letters</p>
+                        <p id="letters-guessed">&nbsp;</p>
+                    </div>
+
+                    <div class="guess-number">
+                        <p>Incorrect Guesses Left:</p>
+                        <p id="guesses-remaining">&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+            <div class="image-location col-4">
+                <img id="image-placeholder" src="#">
+            </div>
+            <div class="col-4">
+                <div class="user-info">
+                    <div class="wins">
+                        <p>Number of wins:</p>
+                        <p id="win-total">&nbsp;</p>
+                    </div>
+
+                    <div class="losses">
+                        <p>Number of Losses:</p>
+                        <p id="loss-total">&nbsp;</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="" id="alert-message" role="alert"></div>
+        <div class="" id="alert-message" role="alert"></div>
     </div>
     <audio id="music-bed" src="assets/audio/music_bed.mp3" type="audio/mp3"></audio>
     <audio class="sound-fx" id="correct-guess-sound" src="assets/audio/correct.mp3" type="audio/mp3"></audio>

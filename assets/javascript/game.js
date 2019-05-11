@@ -1,96 +1,98 @@
-var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
+// var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
 
-// randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
-var randomWordLetters = [];
+var nashvilleArray = ["abc def ghi jkl"];
 
 var winTotal = 0;
-
 var lossTotal = 0;
+
+var musicBedOn = true;
+var soundFxOn = true;
+
+var randomWord;
+var randomWordLetters = [];
+var blankSpaces = [];
 
 function startGame() {
 
-    resetNumberOfGuessesStyling()
+    initializeGuessedLetters();
 
+    resetImage();
+    resetNumberOfGuessesStyling();
     resetGuessedLetters();
-
     resetMessage();
 
     musicBed();
 
     stopWinningSound();
-
     stopLosingSound();
 
-    initializeGuessedLetters()
+    chooseRandomWord();
+    ////////////////////////////////////////////////////////////////////////////////////
+
 
     // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
-    var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-    console.log(randomWord);
+    // var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+    // console.log(randomWord);
 
-    for (var l = 0; l < randomWord.length; l++) {
-        randomWordLetters.push(randomWord.charAt(l));
-        // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
-        // Removes the space characters from the array;
-        randomWordLetters = randomWordLetters.filter(function (str) {
-            return /\S/.test(str);
-        });
-    };
+
+    // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
+    // var randomWordLetters = [];
+
+    // for (var l = 0; l < randomWord.length; l++) {
+    //     randomWordLetters.push(randomWord.charAt(l));
+    //     // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
+    //     // Removes the space characters from the array;
+    //     randomWordLetters = randomWordLetters.filter(function (str) {
+    //         return /\S/.test(str);
+    //     });
+    // };
 
     // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
     // wordLength = 8
-    var wordLength = randomWord.length;
+    // var wordLength = randomWord.length;
 
-    // nashvilleWord = "<span id="nashville-word"> _ _ _ _ _ _ _ _ </span>"
-    var nashvilleWord = document.getElementById("nashville-word");
+    // // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
+    // var blankSpaces = [];
 
-    // userGuess = "a"
-    var userGuess;
+    // for (i = 0; i < wordLength; i++) {
+    //     blankSpaces.push(" _ ");
+    //     if (randomWord[i] === " ") {
+    //         blankSpaces.splice(i, 1, "&nbsp;");
+    //         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    //     } else {
+    //         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    //     };
+    // };
 
-    // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
-    var blankSpaces = [];
+    // var randomWordLettersWithSpaces = [];
 
-    for (i = 0; i < wordLength; i++) {
-        blankSpaces.push(" _ ");
-        if (randomWord[i] === " ") {
-            blankSpaces.splice(i, 1, "&nbsp;");
-            document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-        } else {
-            document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-        };
-    };
-
+    // for (var x = 0; x < randomWord.length; x++) {
+    //     if (randomWord[x] === " ") {
+    //         randomWordLettersWithSpaces.splice(i, 1, " _ ");
+    //     }
+    //     randomWordLettersWithSpaces.push(randomWord.charAt(x));
+    //     randomWordLettersWithSpaces = randomWordLettersWithSpaces.filter(function (str) {
+    //         return /\S/.test(str);
+    //     });
+    // };
 
     // To remove "&nbsp;" from blankSpaces array to be used to compare randomWordLetters array.
     // Source: https://flaviocopes.com/how-to-remove-item-from-array/
-    var whiteSpace = "&nbsp;";
-    var blankSpacesMinusSpace = blankSpaces.filter(item => !whiteSpace.includes(item));
+    // var whiteSpace = "&nbsp;";
+    // var blankSpacesMinusSpace = blankSpaces.filter(item => !whiteSpace.includes(item));
 
-    var randomWordLettersWithSpaces = [];
 
-    for (var x = 0; x < randomWord.length; x++) {
-        if (randomWord[x] === " ") {
-            randomWordLettersWithSpaces.splice(i, 1, " _ ");
-        }
-        randomWordLettersWithSpaces.push(randomWord.charAt(x));
-        randomWordLettersWithSpaces = randomWordLettersWithSpaces.filter(function (str) {
-            return /\S/.test(str);
-        });
-    };
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // userGuess = "a"
+    var userGuess;
 
     var indexes = [];
 
-    var gussesRemaining = guesses;
     var alertMessages = ['Please choose a letter.', 'You have already chosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses'];
 
     var id;
-
-    // Used to calculate guesses based on unique array values
-    // Source: https://medium.com/front-end-weekly/getting-unique-values-in-javascript-arrays-17063080f836
-    var unique = (value, index, self) => {
-        return self.indexOf(value) === index;
-    };
-    
-    var uniqueRandomWordLetters = randomWordLetters.filter(unique);
     var guesses = 5;
 
 
@@ -102,7 +104,6 @@ function startGame() {
 
     function correctGuess(indexes) {
         indexes.forEach(function (item) {
-            blankSpacesMinusSpace.splice(item, 1, userGuess);
             blankSpaces.splice(item, 1, userGuess);
             document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
         });
@@ -192,7 +193,7 @@ function startGame() {
             winTotal++;
             document.getElementById("win-total").innerHTML = winTotal;
             winningImage(randomWord);
-        } else if (arraysEqual(blankSpacesMinusSpace, randomWordLettersWithSpaces)) {
+        } else if (arraysEqual(blankSpaces, randomWordLetters)) {
             alertMessage(2);
             winTotal++;
             winningSound();
@@ -227,7 +228,7 @@ function startGame() {
         };
 
     };
-    
+
     function initializeGuessedLetters() {
         document.getElementById("letters-guessed").innerHTML = "&nbsp;";
     };
@@ -251,7 +252,7 @@ function startGame() {
         audio = document.getElementById("music-bed");
         audio.loop = true;
         audio.play();
-        audio.currentTime=0;
+        audio.currentTime = 0;
     };
 
     function winningSound() {
@@ -275,11 +276,38 @@ function startGame() {
         var audio = document.getElementById("losing-sound");
         audio.pause();
     };
-     
+
 
     document.getElementById("win-total").innerHTML = winTotal;
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
+};
+
+function chooseRandomWord() {
+    blankSpaces = [];
+    randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+
+    if (randomWord.search(" ")) {
+        console.log("This word has a space")
+        for (var x = 0; x < randomWord.length; x++) {
+            blankSpaces.push(" _ ");
+            if (randomWord[x] === " ") {
+                blankSpaces.splice(x, 1, "&nbsp;");
+                document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+            } else {
+                randomWordLetters.splice(x, 1, " _ ");
+            }
+        };
+        console.log("randomWordLetters", randomWordLetters);
+        console.log("blank spaces", blankSpaces);
+    } else {
+        for (var x = 0; x < randomWord.length; x++) {
+            randomWordLetters.push(randomWord.charAt(x));
+            randomWordLetters = randomWordLetters.filter(function (str) {
+                return /\S/.test(str);
+            });
+        };
+    }
 };
 
 function resetGuessedLetters() {
@@ -322,28 +350,61 @@ function restrictSpace() {
     }
 };
 
+function resetImage() {
+    var resetImage = document.getElementById("image-placeholder");
+    resetImage.style.display = "none";
+    resetImage.removeAttribute("src");
+};
+
 function winningImage(randomWord) {
-    var b = document.getElementById("winning-image");
-    var c = document.getElementById("image-placeholder")
+    var b = document.getElementById("image-placeholder")
     if (randomWord === "broadway") {
         b.setAttribute("src", "assets/images/broadway.jpg");
         b.style.display = "block";
-        b.appendChild(c);
     } else if (randomWord === "vanderbilt") {
         b.setAttribute("src", "assets/images/vanderbilt.jpg");
         b.style.display = "block";
-        b.appendChild(c);
     } else if (randomWord === "grand ole opry") {
         b.setAttribute("src", "assets/images/grand_ole_opry.jpg");
         b.style.display = "block";
-        b.appendChild(c);
     } else if (randomWord === "ryman auditorium") {
         b.setAttribute("src", "assets/images/ryman.jpg");
         b.style.display = "block";
-        b.appendChild(c);
     } else if (randomWord === "parthenon") {
         b.setAttribute("src", "assets/images/parthenon.jpg");
         b.style.display = "block";
-        b.appendChild(c);
+    } else if (randomWord === "nissan stadium") {
+        b.setAttribute("src", "assets/images/nissan_stadium.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "frist center") {
+        b.setAttribute("src", "assets/images/frist_center.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "cheekwood") {
+        b.setAttribute("src", "assets/images/cheekwood.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "zoo at grassmere") {
+        b.setAttribute("src", "assets/images/zoo.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "the hermitage") {
+        b.setAttribute("src", "assets/images/hermitage.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "nashville shores") {
+        b.setAttribute("src", "assets/images/nashville_shores.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "general jackson showboat") {
+        b.setAttribute("src", "assets/images/general_jackson.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "printers alley") {
+        b.setAttribute("src", "assets/images/printers_alley.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "the gulch") {
+        b.setAttribute("src", "assets/images/gulch.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "bicentennial park") {
+        b.setAttribute("src", "assets/images/bicentennial_park.jpg");
+        b.style.display = "block";
+    } else if (randomWord === "belle meade plantation") {
+        b.setAttribute("src", "assets/images/belle_meade.jpg");
+        b.style.display = "block";
     }
 };
