@@ -2,10 +2,10 @@
 __Vanderbilt Coding Boot Camp - Coursework 3 - Word Guess Game__  
 _https://terrencemm2.github.io/coursework3-word-guess-game_  
 
-#Purpose  
+# Purpose  
 The purpose of this project is to demonstrate the fundatmental concepts of Javascript such as using/reading arrays, initializing/calling functions, and utliizing for-loops and if/else statements.  
   
-#Instructions  
+# Instructions  
 1. To begin, click "Start Game!".  
     _A random word will be generated and blanks shown to guide the user as to how many words and/or letters remain._  
 2. Using the keyboard, select an alpha character.  
