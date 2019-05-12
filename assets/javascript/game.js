@@ -1,6 +1,6 @@
-// var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
+var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditorium", "Parthenon", "Nissan Stadium", "Frist Center", "Cheekwood", "Zoo at Grassmere", "The Hermitage", "Nashville Shores", "General Jackson Showboat", "Printers Alley", "The Gulch", "Bicentennial Park", "Belle Meade Plantation"];
 
-var nashvilleArray = ["abc def ghi jkl"];
+// var nashvilleArray = ["aaa bbb ccc ddd"];
 
 var winTotal = 0;
 var lossTotal = 0;
@@ -27,72 +27,14 @@ function startGame() {
     stopLosingSound();
 
     chooseRandomWord();
-    ////////////////////////////////////////////////////////////////////////////////////
 
-
-    // Source: https://www.kirupa.com/html5/picking_random_item_from_array.htm
-    // var randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-    // console.log(randomWord);
-
-
-    // randomWordLetters = ["B", "r", "o", "a", "d", "w", "a", "y"]
-    // var randomWordLetters = [];
-
-    // for (var l = 0; l < randomWord.length; l++) {
-    //     randomWordLetters.push(randomWord.charAt(l));
-    //     // Source: https://stackoverflow.com/questions/20668872/remove-whitespace-only-array-elements
-    //     // Removes the space characters from the array;
-    //     randomWordLetters = randomWordLetters.filter(function (str) {
-    //         return /\S/.test(str);
-    //     });
-    // };
-
-    // Count without spaces: https://stackoverflow.com/questions/26389745/how-to-count-the-number-of-characters-without-spaces
-    // wordLength = 8
-    // var wordLength = randomWord.length;
-
-    // // blankSpaces = _ _ _ _ _ _ _ _ (to be replaced if userGuess matched letters in randomWord)
-    // var blankSpaces = [];
-
-    // for (i = 0; i < wordLength; i++) {
-    //     blankSpaces.push(" _ ");
-    //     if (randomWord[i] === " ") {
-    //         blankSpaces.splice(i, 1, "&nbsp;");
-    //         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-    //     } else {
-    //         document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-    //     };
-    // };
-
-    // var randomWordLettersWithSpaces = [];
-
-    // for (var x = 0; x < randomWord.length; x++) {
-    //     if (randomWord[x] === " ") {
-    //         randomWordLettersWithSpaces.splice(i, 1, " _ ");
-    //     }
-    //     randomWordLettersWithSpaces.push(randomWord.charAt(x));
-    //     randomWordLettersWithSpaces = randomWordLettersWithSpaces.filter(function (str) {
-    //         return /\S/.test(str);
-    //     });
-    // };
-
-    // To remove "&nbsp;" from blankSpaces array to be used to compare randomWordLetters array.
-    // Source: https://flaviocopes.com/how-to-remove-item-from-array/
-    // var whiteSpace = "&nbsp;";
-    // var blankSpacesMinusSpace = blankSpaces.filter(item => !whiteSpace.includes(item));
-
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////
-    // userGuess = "a"
     var userGuess;
+    var guessedLetters = [];
 
     var indexes = [];
 
     var alertMessages = ['Please choose a letter.', 'You have already chosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses'];
 
-    var id;
     var guesses = 5;
 
 
@@ -105,6 +47,7 @@ function startGame() {
     function correctGuess(indexes) {
         indexes.forEach(function (item) {
             blankSpaces.splice(item, 1, userGuess);
+            randomWordBlanks.splice(item, 1, userGuess);
             document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
         });
     };
@@ -188,12 +131,12 @@ function startGame() {
         };
 
         // Calculates winning or losing scenarios
-        if (arraysEqual(blankSpaces, randomWordLetters)) {
+        if (arraysEqual(randomWordBlanks, randomWordLetters)) {
             alertMessage(2);
             winTotal++;
             document.getElementById("win-total").innerHTML = winTotal;
             winningImage(randomWord);
-        } else if (arraysEqual(blankSpaces, randomWordLetters)) {
+        } else if (arraysEqual(randomWordBlanks, randomWordLetters)) {
             alertMessage(2);
             winTotal++;
             winningSound();
@@ -229,8 +172,31 @@ function startGame() {
 
     };
 
+    function chooseRandomWord() {
+        blankSpaces = []; // Displayed to user
+        blanksIncludeSpaces = [];
+        randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
+        randomWordLetters = []; // To be analyzed against
+        randomWordBlanks = []; // To be filled in as used types
+
+        if (randomWord.search(" ")) {
+            for (var x = 0; x < randomWord.length; x++) {
+                blankSpaces.push(" _ ");
+                randomWordBlanks.push(" ");
+                blanksIncludeSpaces.push(randomWord.charAt(x));
+                randomWordLetters.push(randomWord.charAt(x));
+                if (randomWord[x] === " ") {
+                    blankSpaces.splice(x, 1, "&nbsp;");
+                    randomWordBlanks.splice(x, 1, " ");
+                }
+            };
+        };
+        document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
+    };
+
     function initializeGuessedLetters() {
-        document.getElementById("letters-guessed").innerHTML = "&nbsp;";
+        blanksSpaces = [];
+        document.getElementById("letters-guessed").textContent = blankSpaces;
     };
 
     function correctGuessSound() {
@@ -283,35 +249,8 @@ function startGame() {
     document.getElementById("guesses-remaining").innerHTML = guesses;
 };
 
-function chooseRandomWord() {
-    blankSpaces = [];
-    randomWord = nashvilleArray[Math.floor(Math.random() * nashvilleArray.length)].toLowerCase();
-
-    if (randomWord.search(" ")) {
-        console.log("This word has a space")
-        for (var x = 0; x < randomWord.length; x++) {
-            blankSpaces.push(" _ ");
-            if (randomWord[x] === " ") {
-                blankSpaces.splice(x, 1, "&nbsp;");
-                document.getElementById("nashville-word").innerHTML = blankSpaces.join(" ");
-            } else {
-                randomWordLetters.splice(x, 1, " _ ");
-            }
-        };
-        console.log("randomWordLetters", randomWordLetters);
-        console.log("blank spaces", blankSpaces);
-    } else {
-        for (var x = 0; x < randomWord.length; x++) {
-            randomWordLetters.push(randomWord.charAt(x));
-            randomWordLetters = randomWordLetters.filter(function (str) {
-                return /\S/.test(str);
-            });
-        };
-    }
-};
-
 function resetGuessedLetters() {
-    guessedLetters = [];
+    guessedLetters = "&nbsp;";
     document.getElementById("letters-guessed").innerHTML = guessedLetters;
 };
 
