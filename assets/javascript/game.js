@@ -5,9 +5,6 @@ var nashvilleArray = ["Broadway", "Vanderbilt", "Grand Ole Opry", "Ryman Auditor
 var winTotal = 0;
 var lossTotal = 0;
 
-var musicBedOn = true;
-var soundFxOn = true;
-
 var randomWord;
 var randomWordLetters = [];
 var blankSpaces = [];
@@ -33,7 +30,7 @@ function startGame() {
 
     var indexes = [];
 
-    var alertMessages = ['Please choose a letter.', 'You have already chosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" to begin again.', 'Out of guesses'];
+    var alertMessages = ['Please choose a letter.', 'You have already chosen this letter. Please choose again.', 'YOU WIN!', 'Sorry. You lose. Better luck next time.', 'Please press the "Start Game" button to begin again.', 'Out of guesses'];
 
     var guesses = 5;
 
@@ -134,13 +131,8 @@ function startGame() {
         if (arraysEqual(randomWordBlanks, randomWordLetters)) {
             alertMessage(2);
             winTotal++;
-            document.getElementById("win-total").innerHTML = winTotal;
-            winningImage(randomWord);
-        } else if (arraysEqual(randomWordBlanks, randomWordLetters)) {
-            alertMessage(2);
-            winTotal++;
-            winningSound();
             stopMusicBed();
+            winningSound();
             document.getElementById("win-total").innerHTML = winTotal;
             winningImage(randomWord);
         } else if (guesses === 0) {
@@ -199,54 +191,58 @@ function startGame() {
         document.getElementById("letters-guessed").textContent = blankSpaces;
     };
 
-    function correctGuessSound() {
-        var audio = document.getElementById("correct-guess-sound");
-        audio.play();
-    };
-
-    function incorrectGuessSound() {
-        var audio = document.getElementById("incorrect-guess-sound");
-        audio.play();
-    };
-
-    function errorSound() {
-        var audio = document.getElementById("error-sound");
-        audio.play();
-    };
-
-    function musicBed() {
-        audio = document.getElementById("music-bed");
-        audio.loop = true;
-        audio.play();
-        audio.currentTime = 0;
-    };
-
-    function winningSound() {
-        var audio = document.getElementById("winning-sound");
-        audio.play();
-        audio.currentTime = 0;
-    };
-
-    function losingSound() {
-        var audio = document.getElementById("losing-sound");
-        audio.play();
-        audio.currentTime = 0;
-    };
-
-    function stopWinningSound() {
-        var audio = document.getElementById("winning-sound");
-        audio.pause();
-    };
-
-    function stopLosingSound() {
-        var audio = document.getElementById("losing-sound");
-        audio.pause();
-    };
-
-
     document.getElementById("win-total").innerHTML = winTotal;
     document.getElementById("loss-total").innerHTML = lossTotal;
     document.getElementById("guesses-remaining").innerHTML = guesses;
+};
+
+function correctGuessSound() {
+    var audio = document.getElementById("correct-guess-sound");
+    audio.play();
+};
+
+function incorrectGuessSound() {
+    var audio = document.getElementById("incorrect-guess-sound");
+    audio.play();
+};
+
+function errorSound() {
+    var audio = document.getElementById("error-sound");
+    audio.play();
+};
+
+function musicBed() {
+    audio = document.getElementById("music-bed");
+    audio.loop = true;
+    audio.play();
+    audio.currentTime = 0;
+};
+
+function stopWinningSound() {
+    var audio = document.getElementById("winning-sound");
+    audio.pause();
+};
+
+function stopLosingSound() {
+    var audio = document.getElementById("losing-sound");
+    audio.pause();
+};
+
+function stopMusicBed() {
+    var audio = document.getElementById("music-bed");
+    audio.pause();
+};
+
+function winningSound() {
+    var audio = document.getElementById("winning-sound");
+    audio.play();
+    audio.currentTime = 0;
+};
+
+function losingSound() {
+    var audio = document.getElementById("losing-sound");
+    audio.play();
+    audio.currentTime = 0;
 };
 
 function resetGuessedLetters() {
@@ -259,27 +255,6 @@ function resetNumberOfGuessesStyling() {
     guessesStyling.style.color = null;
     guessesStyling.style.fontWeight = null;
     guessesStyling.style.fontSize = null;
-};
-
-function pauseMusicBed() {
-    var audio = document.getElementById("music-bed");
-    audio.pause();
-};
-
-function stopMusicBed() {
-    var audio = document.getElementById("music-bed");
-    audio.pause();
-};
-
-// Allows user to stop and start audio.
-// Source: https://stackoverflow.com/questions/27368778/how-to-toggle-audio-play-pause-with-one-button-or-link
-function togglePlay() {
-    return audio.paused ? audio.play() : audio.pause();
-};
-
-function toggleSoundFX() {
-    var soundFx = document.getElementsByClassName("sound-fx");
-    soundFx.volume = 0;
 };
 
 function restrictSpace() {

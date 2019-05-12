@@ -18,23 +18,10 @@
         <div class="row">
             <h1 class="col-12">Nashville Word Guess</h1>
         </div>
-        <div class="row align-items-center justify-content-center">
-            <div class="col-6 text-right">
-                <button class="btn btn-primary" tabIndex="-1 type=" button" onkeypress="return restrictSpace()"
+        <div class="row align-items-center">
+            <div class="col-12">
+                <button class="btn btn-primary" tabIndex="-1" type="button" onkeypress="return restrictSpace()"
                     onclick="startGame()">Start Game!</button>
-            </div>
-            <div class="col-6 text-left">
-                <label class="switch">
-                    <input type="checkbox">
-                    <span onclick="togglePlay()" class="slider round"></span>
-                </label>
-                <span>Music</span>
-                <br>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span onclick="toggleSoundFX()" class="slider round"></span>
-                </label>
-                <span>Sound FX</span>
             </div>
         </div>
         <div class="row align-items-end">
@@ -77,12 +64,12 @@
 
         <div class="" id="alert-message" role="alert"></div>
     </div>
-    <audio id="music-bed" src="assets/audio/music_bed.mp3" type="audio/mp3"></audio>
-    <audio class="sound-fx" id="correct-guess-sound" src="assets/audio/correct.mp3" type="audio/mp3"></audio>
-    <audio class="sound-fx" id="incorrect-guess-sound" src="assets/audio/incorrect.mp3" type="audio/mp3"></audio>
-    <audio class="sound-fx" id="error-sound" src="assets/audio/error.mp3" type="audio/mp3"></audio>
-    <audio class="sound-fx" id="winning-sound" src="assets/audio/you_win.mp3" type="audio/mp3"></audio>
-    <audio class="sound-fx" id="losing-sound" src="assets/audio/you_lose.mp3" type="audio/mp3"></audio>
+    <audio class="audio" id="music-bed" src="assets/audio/music_bed.mp3" type="audio/mp3"></audio>
+    <audio class="audio"  id="correct-guess-sound" src="assets/audio/correct.mp3" type="audio/mp3"></audio>
+    <audio class="audio" id="incorrect-guess-sound" src="assets/audio/incorrect.mp3" type="audio/mp3"></audio>
+    <audio class="audio" id="error-sound" src="assets/audio/error.mp3" type="audio/mp3"></audio>
+    <audio class="audio" id="winning-sound" src="assets/audio/you_win.mp3" type="audio/mp3"></audio>
+    <audio class="audio" id="losing-sound" src="assets/audio/you_lose.mp3" type="audio/mp3"></audio>
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous">
