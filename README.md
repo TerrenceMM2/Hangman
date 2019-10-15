@@ -1,6 +1,5 @@
-# coursework3-word-guess-game  
-__Vanderbilt Coding Boot Camp - Coursework 3 - Word Guess Game__  
-_https://terrencemm2.github.io/coursework3-word-guess-game_  
+# Hangman 
+Live Link: https://terrencemm2.github.io/Hangman/ 
 
 ## Purpose  
 The purpose of this project is to demonstrate the fundatmental concepts of Javascript such as using/reading arrays, initializing/calling functions, and utliizing for-loops and if/else statements.  
