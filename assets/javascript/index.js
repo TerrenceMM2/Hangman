@@ -4,6 +4,7 @@ import {
   alertMessages,
   nashvilleArray,
 } from "./consts.js";
+import { winningImages } from "./consts.js";
 import { handleSound } from "./utils.js";
 
 function startGame() {
@@ -120,55 +121,9 @@ function startGame() {
 
   function winningImage(randomWord) {
     const b = document.getElementById("image-placeholder");
-    if (randomWord === "broadway") {
-      b.setAttribute("src", "assets/images/broadway.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "vanderbilt") {
-      b.setAttribute("src", "assets/images/vanderbilt.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "grand ole opry") {
-      b.setAttribute("src", "assets/images/grand_ole_opry.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "ryman auditorium") {
-      b.setAttribute("src", "assets/images/ryman.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "parthenon") {
-      b.setAttribute("src", "assets/images/parthenon.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "nissan stadium") {
-      b.setAttribute("src", "assets/images/nissan_stadium.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "frist center") {
-      b.setAttribute("src", "assets/images/frist_center.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "cheekwood") {
-      b.setAttribute("src", "assets/images/cheekwood.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "zoo at grassmere") {
-      b.setAttribute("src", "assets/images/zoo.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "the hermitage") {
-      b.setAttribute("src", "assets/images/hermitage.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "nashville shores") {
-      b.setAttribute("src", "assets/images/nashville_shores.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "general jackson showboat") {
-      b.setAttribute("src", "assets/images/general_jackson.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "printers alley") {
-      b.setAttribute("src", "assets/images/printers_alley.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "the gulch") {
-      b.setAttribute("src", "assets/images/gulch.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "bicentennial park") {
-      b.setAttribute("src", "assets/images/bicentennial_park.jpg");
-      b.style.display = "block";
-    } else if (randomWord === "belle meade plantation") {
-      b.setAttribute("src", "assets/images/belle_meade.jpg");
-      b.style.display = "block";
-    }
+    const obj = winningImages.find((x) => x.id === randomWord);
+    b.setAttribute("src", obj.src);
+    b.style.display = "block";
   }
 
   document.onkeyup = (event) => {
