@@ -25,3 +25,6 @@ export const alertMessages = [
   'Please press the "Start Game" button to begin again.',
   "Out of guesses",
 ];
+
+export const PLAY_SOUND = "play";
+export const STOP_SOUND = "stop";
