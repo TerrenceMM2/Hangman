@@ -1,0 +1,18 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "The classic game with a Nashville twist",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "biome check",
+    "format": "biome format",
+    "lint": "biome lint"
+  },
+  "author": "Terrence Mahnken",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "lefthook": "^1.7.14"
+  }
+}
