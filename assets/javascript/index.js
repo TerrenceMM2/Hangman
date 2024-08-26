@@ -18,7 +18,7 @@ function startGame() {
   let randomWordBlanks = [];
 
   let userGuess;
-  let guessedLetters = [];
+  let guessedLetters;
   let searchedLetter;
 
   let indexes = [];
@@ -38,8 +38,8 @@ function startGame() {
 
   chooseRandomWord();
 
-  function incorrectGuess() {
-    guessedLetters.push(userGuess);
+  function incorrectGuess(letter) {
+    guessedLetters.push(letter);
     document.getElementById("letters-guessed").innerHTML =
       guessedLetters.join(" ");
     return guesses--;
@@ -102,7 +102,7 @@ function startGame() {
   }
 
   function resetGuessedLetters() {
-    guessedLetters = "&nbsp;";
+    guessedLetters = [];
     document.getElementById("letters-guessed").innerHTML = guessedLetters;
   }
 
@@ -150,7 +150,7 @@ function startGame() {
       alertMessage();
       handleSound("correct-guess-sound", PLAY_SOUND);
     } else {
-      incorrectGuess();
+      incorrectGuess(userGuess);
       document.getElementById("guesses-remaining").innerHTML = guesses;
       alertMessage();
       handleSound("incorrect-guess-sound", PLAY_SOUND);
