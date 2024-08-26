@@ -22,6 +22,7 @@
 #loss-total {
   font-size: 1.5rem;
   line-height: 2rem;
+  min-height: 2rem;
 }
 
 #alert-message {
